@@ -1,0 +1,39 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode res = null;
+        ListNode old = null;
+        boolean flag = true;
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for(ListNode node : lists) {
+            while(node != null) {
+                map.put(node.val, map.getOrDefault(node.val, 0) + 1);
+                node = node.next;
+            }
+        }
+        
+        System.out.println(map);
+        
+        for(Integer i : map.keySet()) {
+            for(int j = 0; j < map.get(i); j++) {
+                ListNode temp = new ListNode(i);
+                if(flag) {
+                    res = temp;
+                    old = res;
+                    flag = false;
+                }else {
+                    old.next = temp;
+                    old = temp;
+                }
+            }
+        }
+        return res;
+    }
+}
